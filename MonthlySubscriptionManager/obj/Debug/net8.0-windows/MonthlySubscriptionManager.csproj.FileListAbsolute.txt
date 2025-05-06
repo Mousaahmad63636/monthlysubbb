@@ -1,0 +1,7 @@
+C:\Users\Gundam\Desktop\v6666666666\MonthlySubscriptionManager\MonthlySubscriptionManager\obj\Debug\net8.0-windows\MonthlySubscriptionManager.csproj.AssemblyReference.cache
+C:\Users\Gundam\Desktop\v6666666666\MonthlySubscriptionManager\MonthlySubscriptionManager\obj\Debug\net8.0-windows\MainWindow.g.cs
+C:\Users\Gundam\Desktop\v6666666666\MonthlySubscriptionManager\MonthlySubscriptionManager\obj\Debug\net8.0-windows\Views\MonthlySubscriptionView.g.cs
+C:\Users\Gundam\Desktop\v6666666666\MonthlySubscriptionManager\MonthlySubscriptionManager\obj\Debug\net8.0-windows\App.g.cs
+C:\Users\Gundam\Desktop\v6666666666\MonthlySubscriptionManager\MonthlySubscriptionManager\obj\Debug\net8.0-windows\GeneratedInternalTypeHelper.g.cs
+C:\Users\Gundam\Desktop\v6666666666\MonthlySubscriptionManager\MonthlySubscriptionManager\obj\Debug\net8.0-windows\MonthlySubscriptionManager_MarkupCompile.cache
+C:\Users\Gundam\Desktop\v6666666666\MonthlySubscriptionManager\MonthlySubscriptionManager\obj\Debug\net8.0-windows\MonthlySubscriptionManager_MarkupCompile.lref

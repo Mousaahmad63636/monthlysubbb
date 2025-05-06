@@ -1,0 +1,349 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\Gundam\\Desktop\\v6666666666\\MonthlySubscriptionManager\\MonthlySubscriptionManager\\MonthlySubscriptionManager.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\Gundam\\Desktop\\v6666666666\\MonthlySubscriptionManager\\MonthlySubscriptionManager.Application\\MonthlySubscriptionManager.Application.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Gundam\\Desktop\\v6666666666\\MonthlySubscriptionManager\\MonthlySubscriptionManager.Application\\MonthlySubscriptionManager.Application.csproj",
+        "projectName": "MonthlySubscriptionManager.Application",
+        "projectPath": "C:\\Users\\Gundam\\Desktop\\v6666666666\\MonthlySubscriptionManager\\MonthlySubscriptionManager.Application\\MonthlySubscriptionManager.Application.csproj",
+        "packagesPath": "C:\\Users\\Gundam\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Gundam\\Desktop\\v6666666666\\MonthlySubscriptionManager\\MonthlySubscriptionManager.Application\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Gundam\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0-windows"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0-windows7.0": {
+            "targetAlias": "net8.0-windows",
+            "projectReferences": {
+              "C:\\Users\\Gundam\\Desktop\\v6666666666\\MonthlySubscriptionManager\\MonthlySubscriptionManager.Domain\\MonthlySubscriptionManager.Domain.csproj": {
+                "projectPath": "C:\\Users\\Gundam\\Desktop\\v6666666666\\MonthlySubscriptionManager\\MonthlySubscriptionManager.Domain\\MonthlySubscriptionManager.Domain.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.100"
+      },
+      "frameworks": {
+        "net8.0-windows7.0": {
+          "targetAlias": "net8.0-windows",
+          "dependencies": {
+            "AutoMapper": {
+              "target": "Package",
+              "version": "[14.0.0, )"
+            },
+            "AutoMapper.Extensions.Microsoft.DependencyInjection": {
+              "target": "Package",
+              "version": "[12.0.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            },
+            "Microsoft.WindowsDesktop.App.WPF": {
+              "privateAssets": "none"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Gundam\\Desktop\\v6666666666\\MonthlySubscriptionManager\\MonthlySubscriptionManager.Domain\\MonthlySubscriptionManager.Domain.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Gundam\\Desktop\\v6666666666\\MonthlySubscriptionManager\\MonthlySubscriptionManager.Domain\\MonthlySubscriptionManager.Domain.csproj",
+        "projectName": "MonthlySubscriptionManager.Domain",
+        "projectPath": "C:\\Users\\Gundam\\Desktop\\v6666666666\\MonthlySubscriptionManager\\MonthlySubscriptionManager.Domain\\MonthlySubscriptionManager.Domain.csproj",
+        "packagesPath": "C:\\Users\\Gundam\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Gundam\\Desktop\\v6666666666\\MonthlySubscriptionManager\\MonthlySubscriptionManager.Domain\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Gundam\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0-windows"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0-windows7.0": {
+            "targetAlias": "net8.0-windows",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.100"
+      },
+      "frameworks": {
+        "net8.0-windows7.0": {
+          "targetAlias": "net8.0-windows",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            },
+            "Microsoft.WindowsDesktop.App.WPF": {
+              "privateAssets": "none"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Gundam\\Desktop\\v6666666666\\MonthlySubscriptionManager\\MonthlySubscriptionManager.Infrastructure\\MonthlySubscriptionManager.Infrastructure.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Gundam\\Desktop\\v6666666666\\MonthlySubscriptionManager\\MonthlySubscriptionManager.Infrastructure\\MonthlySubscriptionManager.Infrastructure.csproj",
+        "projectName": "MonthlySubscriptionManager.Infrastructure",
+        "projectPath": "C:\\Users\\Gundam\\Desktop\\v6666666666\\MonthlySubscriptionManager\\MonthlySubscriptionManager.Infrastructure\\MonthlySubscriptionManager.Infrastructure.csproj",
+        "packagesPath": "C:\\Users\\Gundam\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Gundam\\Desktop\\v6666666666\\MonthlySubscriptionManager\\MonthlySubscriptionManager.Infrastructure\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Gundam\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0-windows"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0-windows7.0": {
+            "targetAlias": "net8.0-windows",
+            "projectReferences": {
+              "C:\\Users\\Gundam\\Desktop\\v6666666666\\MonthlySubscriptionManager\\MonthlySubscriptionManager.Application\\MonthlySubscriptionManager.Application.csproj": {
+                "projectPath": "C:\\Users\\Gundam\\Desktop\\v6666666666\\MonthlySubscriptionManager\\MonthlySubscriptionManager.Application\\MonthlySubscriptionManager.Application.csproj"
+              },
+              "C:\\Users\\Gundam\\Desktop\\v6666666666\\MonthlySubscriptionManager\\MonthlySubscriptionManager.Domain\\MonthlySubscriptionManager.Domain.csproj": {
+                "projectPath": "C:\\Users\\Gundam\\Desktop\\v6666666666\\MonthlySubscriptionManager\\MonthlySubscriptionManager.Domain\\MonthlySubscriptionManager.Domain.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.100"
+      },
+      "frameworks": {
+        "net8.0-windows7.0": {
+          "targetAlias": "net8.0-windows",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[9.0.4, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[9.0.4, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[9.0.4, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            },
+            "Microsoft.WindowsDesktop.App.WPF": {
+              "privateAssets": "none"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Gundam\\Desktop\\v6666666666\\MonthlySubscriptionManager\\MonthlySubscriptionManager\\MonthlySubscriptionManager.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Gundam\\Desktop\\v6666666666\\MonthlySubscriptionManager\\MonthlySubscriptionManager\\MonthlySubscriptionManager.csproj",
+        "projectName": "MonthlySubscriptionManager",
+        "projectPath": "C:\\Users\\Gundam\\Desktop\\v6666666666\\MonthlySubscriptionManager\\MonthlySubscriptionManager\\MonthlySubscriptionManager.csproj",
+        "packagesPath": "C:\\Users\\Gundam\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Gundam\\Desktop\\v6666666666\\MonthlySubscriptionManager\\MonthlySubscriptionManager\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Gundam\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0-windows"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0-windows7.0": {
+            "targetAlias": "net8.0-windows",
+            "projectReferences": {
+              "C:\\Users\\Gundam\\Desktop\\v6666666666\\MonthlySubscriptionManager\\MonthlySubscriptionManager.Application\\MonthlySubscriptionManager.Application.csproj": {
+                "projectPath": "C:\\Users\\Gundam\\Desktop\\v6666666666\\MonthlySubscriptionManager\\MonthlySubscriptionManager.Application\\MonthlySubscriptionManager.Application.csproj"
+              },
+              "C:\\Users\\Gundam\\Desktop\\v6666666666\\MonthlySubscriptionManager\\MonthlySubscriptionManager.Domain\\MonthlySubscriptionManager.Domain.csproj": {
+                "projectPath": "C:\\Users\\Gundam\\Desktop\\v6666666666\\MonthlySubscriptionManager\\MonthlySubscriptionManager.Domain\\MonthlySubscriptionManager.Domain.csproj"
+              },
+              "C:\\Users\\Gundam\\Desktop\\v6666666666\\MonthlySubscriptionManager\\MonthlySubscriptionManager.Infrastructure\\MonthlySubscriptionManager.Infrastructure.csproj": {
+                "projectPath": "C:\\Users\\Gundam\\Desktop\\v6666666666\\MonthlySubscriptionManager\\MonthlySubscriptionManager.Infrastructure\\MonthlySubscriptionManager.Infrastructure.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.100"
+      },
+      "frameworks": {
+        "net8.0-windows7.0": {
+          "targetAlias": "net8.0-windows",
+          "dependencies": {
+            "ClosedXML": {
+              "target": "Package",
+              "version": "[0.104.2, )"
+            },
+            "Microsoft.Extensions.Configuration": {
+              "target": "Package",
+              "version": "[9.0.4, )"
+            },
+            "Microsoft.Extensions.Configuration.Json": {
+              "target": "Package",
+              "version": "[9.0.4, )"
+            },
+            "Microsoft.Extensions.DependencyInjection": {
+              "target": "Package",
+              "version": "[9.0.4, )"
+            },
+            "Microsoft.Extensions.Hosting": {
+              "target": "Package",
+              "version": "[9.0.4, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            },
+            "Microsoft.WindowsDesktop.App.WPF": {
+              "privateAssets": "none"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
