@@ -11,12 +11,12 @@
 using System;
 using System.Reflection;
 
-[assembly: System.Reflection.AssemblyCompanyAttribute("MonthlySubscriptionManager.Domain")]
-[assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
+[assembly: System.Reflection.AssemblyCompanyAttribute("MonthlySubscriptionManager.Application")]
+[assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+47e94af8e7456b04f8e70d610c7000ed2d11c3f0")]
-[assembly: System.Reflection.AssemblyProductAttribute("MonthlySubscriptionManager.Domain")]
-[assembly: System.Reflection.AssemblyTitleAttribute("MonthlySubscriptionManager.Domain")]
+[assembly: System.Reflection.AssemblyProductAttribute("MonthlySubscriptionManager.Application")]
+[assembly: System.Reflection.AssemblyTitleAttribute("MonthlySubscriptionManager.Application")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
 [assembly: System.Runtime.Versioning.TargetPlatformAttribute("Windows7.0")]
 [assembly: System.Runtime.Versioning.SupportedOSPlatformAttribute("Windows7.0")]
