@@ -1,6 +1,0 @@
-C:\Users\Gundam\Desktop\v6666666666\MonthlySubscriptionManager\MonthlySubscriptionManager.Application\obj\Debug\net8.0-windows\MonthlySubscriptionManager.Application.csproj.AssemblyReference.cache
-C:\Users\Gundam\Desktop\v6666666666\MonthlySubscriptionManager\MonthlySubscriptionManager.Application\obj\Debug\net8.0-windows\MonthlySubscriptionManager.Application.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\Gundam\Desktop\v6666666666\MonthlySubscriptionManager\MonthlySubscriptionManager.Application\obj\Debug\net8.0-windows\MonthlySubscriptionManager.Application.AssemblyInfoInputs.cache
-C:\Users\Gundam\Desktop\v6666666666\MonthlySubscriptionManager\MonthlySubscriptionManager.Application\obj\Debug\net8.0-windows\MonthlySubscriptionManager.Application.AssemblyInfo.cs
-C:\Users\Gundam\Desktop\v6666666666\MonthlySubscriptionManager\MonthlySubscriptionManager.Application\obj\Debug\net8.0-windows\MonthlySubscriptionManager.Application.csproj.CoreCompileInputs.cache
-C:\Users\Gundam\Desktop\v6666666666\MonthlySubscriptionManager\MonthlySubscriptionManager.Application\obj\Debug\net8.0-windows\MonthlySubscriptionManager.Application.sourcelink.json

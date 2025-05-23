@@ -1,0 +1,27 @@
+﻿<Application x:Class="SubscriptionManager.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:SubscriptionManager">
+    <Application.Resources>
+        <ResourceDictionary>
+            <!-- Add any global styles here -->
+            <Style TargetType="Button">
+                <Setter Property="MinWidth" Value="80"/>
+                <Setter Property="MinHeight" Value="25"/>
+                <Setter Property="Margin" Value="2"/>
+            </Style>
+
+            <Style TargetType="TextBox">
+                <Setter Property="MinHeight" Value="25"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                <Setter Property="Padding" Value="5,2"/>
+            </Style>
+
+            <Style TargetType="DataGrid">
+                <Setter Property="AlternatingRowBackground" Value="#F0F0F0"/>
+                <Setter Property="GridLinesVisibility" Value="Horizontal"/>
+                <Setter Property="HeadersVisibility" Value="Column"/>
+            </Style>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
