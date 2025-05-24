@@ -11,5 +11,10 @@ namespace SubscriptionManager.Services
         Task DeleteExpenseAsync(int id);
         Task<List<Expense>> GetExpensesByDateRangeAsync(DateTime startDate, DateTime endDate);
         Task<decimal> GetTotalExpensesAsync(DateTime startDate, DateTime endDate);
+        Task<List<Expense>> GetExpensesByMonthAsync(int year, int month);
+        Task<decimal> GetTotalExpensesForMonthAsync(int year, int month);
+        Task<decimal> GetTotalConsumptionForMonthAsync(int year, int month);
+        Task<decimal> GetTotalRevenueForMonthAsync(int year, int month);
+        Task<decimal> GetTotalProfitForMonthAsync(int year, int month);
     }
 }

@@ -15,9 +15,15 @@ namespace SubscriptionManager.ViewModels
         private Expense _newExpense;
         private DateTime _startDate = DateTime.Now.AddMonths(-1);
         private DateTime _endDate = DateTime.Now;
+        private int _selectedYear = DateTime.Now.Year;
+        private int _selectedMonth = DateTime.Now.Month;
         private decimal _totalExpenses;
+        private decimal _totalConsumption;
+        private decimal _totalRevenue;
+        private decimal _totalProfit;
         private bool _isNewExpenseDialogOpen;
         private bool _isInitialized;
+        private bool _isMonthlyView = true;
         private readonly List<string> _categories = new()
         {
             "Motor Expenses",
@@ -35,7 +41,6 @@ namespace SubscriptionManager.ViewModels
             _newExpense = new Expense();
 
             InitializeCommands();
-
         }
 
         public ObservableCollection<Expense> Expenses
@@ -61,7 +66,7 @@ namespace SubscriptionManager.ViewModels
             get => _startDate;
             set
             {
-                if (SetProperty(ref _startDate, value))
+                if (SetProperty(ref _startDate, value) && !IsMonthlyView)
                 {
                     _ = FilterExpensesAsync();
                 }
@@ -73,9 +78,48 @@ namespace SubscriptionManager.ViewModels
             get => _endDate;
             set
             {
-                if (SetProperty(ref _endDate, value))
+                if (SetProperty(ref _endDate, value) && !IsMonthlyView)
                 {
                     _ = FilterExpensesAsync();
+                }
+            }
+        }
+
+        public int SelectedYear
+        {
+            get => _selectedYear;
+            set
+            {
+                if (SetProperty(ref _selectedYear, value))
+                {
+                    _ = LoadMonthlyDataAsync();
+                }
+            }
+        }
+
+        public int SelectedMonth
+        {
+            get => _selectedMonth;
+            set
+            {
+                if (SetProperty(ref _selectedMonth, value))
+                {
+                    _ = LoadMonthlyDataAsync();
+                }
+            }
+        }
+
+        public bool IsMonthlyView
+        {
+            get => _isMonthlyView;
+            set
+            {
+                if (SetProperty(ref _isMonthlyView, value))
+                {
+                    if (value)
+                        _ = LoadMonthlyDataAsync();
+                    else
+                        _ = FilterExpensesAsync();
                 }
             }
         }
@@ -84,6 +128,24 @@ namespace SubscriptionManager.ViewModels
         {
             get => _totalExpenses;
             set => SetProperty(ref _totalExpenses, value);
+        }
+
+        public decimal TotalConsumption
+        {
+            get => _totalConsumption;
+            set => SetProperty(ref _totalConsumption, value);
+        }
+
+        public decimal TotalRevenue
+        {
+            get => _totalRevenue;
+            set => SetProperty(ref _totalRevenue, value);
+        }
+
+        public decimal TotalProfit
+        {
+            get => _totalProfit;
+            set => SetProperty(ref _totalProfit, value);
         }
 
         public bool IsNewExpenseDialogOpen
@@ -100,7 +162,12 @@ namespace SubscriptionManager.ViewModels
 
         public List<string> Categories => _categories;
 
-        // Commands
+        public List<int> AvailableYears => Enumerable.Range(DateTime.Now.Year - 5, 11).Reverse().ToList();
+
+        public List<int> AvailableMonths => Enumerable.Range(1, 12).ToList();
+
+        public string GetMonthName(int month) => new DateTime(2000, month, 1).ToString("MMMM");
+
         public ICommand AddExpenseCommand { get; private set; } = null!;
         public ICommand SaveExpenseCommand { get; private set; } = null!;
         public ICommand DeleteExpenseCommand { get; private set; } = null!;
@@ -108,7 +175,8 @@ namespace SubscriptionManager.ViewModels
         public ICommand CloseNewExpenseDialogCommand { get; private set; } = null!;
         public ICommand RefreshCommand { get; private set; } = null!;
         public ICommand FilterCommand { get; private set; } = null!;
-
+        public ICommand SwitchToMonthlyViewCommand { get; private set; } = null!;
+        public ICommand SwitchToDateRangeViewCommand { get; private set; } = null!;
 
         public async Task InitializeAsync()
         {
@@ -116,7 +184,7 @@ namespace SubscriptionManager.ViewModels
 
             try
             {
-                await LoadDataAsync();
+                await LoadMonthlyDataAsync();
                 IsInitialized = true;
             }
             catch (Exception ex)
@@ -132,27 +200,42 @@ namespace SubscriptionManager.ViewModels
             DeleteExpenseCommand = new AsyncRelayCommand(DeleteExpenseAsync);
             OpenNewExpenseDialogCommand = new RelayCommand(_ => OpenNewExpenseDialog());
             CloseNewExpenseDialogCommand = new RelayCommand(_ => CloseNewExpenseDialog());
-            RefreshCommand = new AsyncRelayCommand(LoadDataAsync);
+            RefreshCommand = new AsyncRelayCommand(LoadCurrentDataAsync);
             FilterCommand = new AsyncRelayCommand(FilterExpensesAsync);
+            SwitchToMonthlyViewCommand = new RelayCommand(_ => IsMonthlyView = true);
+            SwitchToDateRangeViewCommand = new RelayCommand(_ => IsMonthlyView = false);
         }
 
-        private async Task LoadDataAsync(object? parameter = null)
+        private async Task LoadCurrentDataAsync(object? parameter = null)
+        {
+            if (IsMonthlyView)
+                await LoadMonthlyDataAsync();
+            else
+                await FilterExpensesAsync();
+        }
+
+        private async Task LoadMonthlyDataAsync()
         {
             try
             {
-                var expenses = await _expenseService.GetAllExpensesAsync();
+                var expenses = await _expenseService.GetExpensesByMonthAsync(SelectedYear, SelectedMonth);
+                var totalExpenses = await _expenseService.GetTotalExpensesForMonthAsync(SelectedYear, SelectedMonth);
+                var totalConsumption = await _expenseService.GetTotalConsumptionForMonthAsync(SelectedYear, SelectedMonth);
+                var totalRevenue = await _expenseService.GetTotalRevenueForMonthAsync(SelectedYear, SelectedMonth);
+                var totalProfit = await _expenseService.GetTotalProfitForMonthAsync(SelectedYear, SelectedMonth);
 
-          
                 await System.Windows.Application.Current.Dispatcher.InvokeAsync(() =>
                 {
                     Expenses = new ObservableCollection<Expense>(expenses);
+                    TotalExpenses = totalExpenses;
+                    TotalConsumption = totalConsumption;
+                    TotalRevenue = totalRevenue;
+                    TotalProfit = totalProfit;
                 });
-
-                await CalculateTotalAsync();
             }
             catch (Exception ex)
             {
-                await ShowErrorAsync($"Error loading expenses: {ex.Message}");
+                await ShowErrorAsync($"Error loading monthly data: {ex.Message}");
             }
         }
 
@@ -161,36 +244,20 @@ namespace SubscriptionManager.ViewModels
             try
             {
                 var expenses = await _expenseService.GetExpensesByDateRangeAsync(StartDate, EndDate);
+                var totalExpenses = await _expenseService.GetTotalExpensesAsync(StartDate, EndDate);
 
-           
                 await System.Windows.Application.Current.Dispatcher.InvokeAsync(() =>
                 {
                     Expenses = new ObservableCollection<Expense>(expenses);
+                    TotalExpenses = totalExpenses;
+                    TotalConsumption = 0;
+                    TotalRevenue = 0;
+                    TotalProfit = 0;
                 });
-
-                await CalculateTotalAsync();
             }
             catch (Exception ex)
             {
                 await ShowErrorAsync($"Error filtering expenses: {ex.Message}");
-            }
-        }
-
-        private async Task CalculateTotalAsync()
-        {
-            try
-            {
-                var total = await _expenseService.GetTotalExpensesAsync(StartDate, EndDate);
-
-             
-                await System.Windows.Application.Current.Dispatcher.InvokeAsync(() =>
-                {
-                    TotalExpenses = total;
-                });
-            }
-            catch (Exception ex)
-            {
-                await ShowErrorAsync($"Error calculating total: {ex.Message}");
             }
         }
 
@@ -226,7 +293,7 @@ namespace SubscriptionManager.ViewModels
                 await ShowSuccessAsync("Expense added successfully!");
 
                 CloseNewExpenseDialog();
-                await LoadDataAsync();
+                await LoadCurrentDataAsync();
             }
             catch (Exception ex)
             {
@@ -242,7 +309,7 @@ namespace SubscriptionManager.ViewModels
 
                 await _expenseService.UpdateExpenseAsync(SelectedExpense);
                 await ShowSuccessAsync("Expense updated successfully!");
-                await LoadDataAsync();
+                await LoadCurrentDataAsync();
             }
             catch (Exception ex)
             {
@@ -266,7 +333,7 @@ namespace SubscriptionManager.ViewModels
                 {
                     await _expenseService.DeleteExpenseAsync(SelectedExpense.Id);
                     await ShowSuccessAsync("Expense deleted successfully!");
-                    await LoadDataAsync();
+                    await LoadCurrentDataAsync();
                     SelectedExpense = null;
                 }
             }
