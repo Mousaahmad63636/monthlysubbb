@@ -16,5 +16,8 @@ namespace SubscriptionManager.Services
         Task<decimal> GetTotalConsumptionForMonthAsync(int year, int month);
         Task<decimal> GetTotalRevenueForMonthAsync(int year, int month);
         Task<decimal> GetTotalProfitForMonthAsync(int year, int month);
+
+        // TEMPORARY - for debugging consumption issues (remove after troubleshooting)
+        Task<string> DebugConsumptionDataAsync(int year, int month);
     }
 }

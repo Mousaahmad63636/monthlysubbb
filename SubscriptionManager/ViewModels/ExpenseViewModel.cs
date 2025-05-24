@@ -177,6 +177,8 @@ namespace SubscriptionManager.ViewModels
         public ICommand FilterCommand { get; private set; } = null!;
         public ICommand SwitchToMonthlyViewCommand { get; private set; } = null!;
         public ICommand SwitchToDateRangeViewCommand { get; private set; } = null!;
+        public ICommand DebugConsumptionCommand { get; private set; } = null!;
+
 
         public async Task InitializeAsync()
         {
@@ -202,6 +204,7 @@ namespace SubscriptionManager.ViewModels
             CloseNewExpenseDialogCommand = new RelayCommand(_ => CloseNewExpenseDialog());
             RefreshCommand = new AsyncRelayCommand(LoadCurrentDataAsync);
             FilterCommand = new AsyncRelayCommand(FilterExpensesAsync);
+            DebugConsumptionCommand = new AsyncRelayCommand(DebugConsumptionAsync);
             SwitchToMonthlyViewCommand = new RelayCommand(_ => IsMonthlyView = true);
             SwitchToDateRangeViewCommand = new RelayCommand(_ => IsMonthlyView = false);
         }
@@ -236,6 +239,18 @@ namespace SubscriptionManager.ViewModels
             catch (Exception ex)
             {
                 await ShowErrorAsync($"Error loading monthly data: {ex.Message}");
+            }
+        }
+        private async Task DebugConsumptionAsync(object? parameter)
+        {
+            try
+            {
+                var debugInfo = await _expenseService.DebugConsumptionDataAsync(SelectedYear, SelectedMonth);
+                MessageBox.Show(debugInfo, "Consumption Debug Info", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                await ShowErrorAsync($"Debug error: {ex.Message}");
             }
         }
 
