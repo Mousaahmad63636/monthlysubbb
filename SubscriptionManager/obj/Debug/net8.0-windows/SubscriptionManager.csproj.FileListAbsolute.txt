@@ -163,6 +163,7 @@ C:\Users\Gundam\Desktop\Could be\SubscriptionManager\SubscriptionManager\bin\Deb
 C:\Users\Gundam\Desktop\Could be\SubscriptionManager\SubscriptionManager\obj\Debug\net8.0-windows\SubscriptionManager.csproj.AssemblyReference.cache
 C:\Users\Gundam\Desktop\Could be\SubscriptionManager\SubscriptionManager\obj\Debug\net8.0-windows\MainWindow.g.cs
 C:\Users\Gundam\Desktop\Could be\SubscriptionManager\SubscriptionManager\obj\Debug\net8.0-windows\Views\ExpenseView.g.cs
+C:\Users\Gundam\Desktop\Could be\SubscriptionManager\SubscriptionManager\obj\Debug\net8.0-windows\Views\SettingsView.g.cs
 C:\Users\Gundam\Desktop\Could be\SubscriptionManager\SubscriptionManager\obj\Debug\net8.0-windows\Views\SubscriptionView.g.cs
 C:\Users\Gundam\Desktop\Could be\SubscriptionManager\SubscriptionManager\obj\Debug\net8.0-windows\App.g.cs
 C:\Users\Gundam\Desktop\Could be\SubscriptionManager\SubscriptionManager\obj\Debug\net8.0-windows\GeneratedInternalTypeHelper.g.cs
@@ -171,12 +172,14 @@ C:\Users\Gundam\Desktop\Could be\SubscriptionManager\SubscriptionManager\obj\Deb
 C:\Users\Gundam\Desktop\Could be\SubscriptionManager\SubscriptionManager\obj\Debug\net8.0-windows\App.baml
 C:\Users\Gundam\Desktop\Could be\SubscriptionManager\SubscriptionManager\obj\Debug\net8.0-windows\MainWindow.baml
 C:\Users\Gundam\Desktop\Could be\SubscriptionManager\SubscriptionManager\obj\Debug\net8.0-windows\Views\ExpenseView.baml
+C:\Users\Gundam\Desktop\Could be\SubscriptionManager\SubscriptionManager\obj\Debug\net8.0-windows\Views\SettingsView.baml
 C:\Users\Gundam\Desktop\Could be\SubscriptionManager\SubscriptionManager\obj\Debug\net8.0-windows\Views\SubscriptionView.baml
 C:\Users\Gundam\Desktop\Could be\SubscriptionManager\SubscriptionManager\obj\Debug\net8.0-windows\SubscriptionManager.g.resources
 C:\Users\Gundam\Desktop\Could be\SubscriptionManager\SubscriptionManager\obj\Debug\net8.0-windows\SubscriptionManager.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\Gundam\Desktop\Could be\SubscriptionManager\SubscriptionManager\obj\Debug\net8.0-windows\SubscriptionManager.AssemblyInfoInputs.cache
 C:\Users\Gundam\Desktop\Could be\SubscriptionManager\SubscriptionManager\obj\Debug\net8.0-windows\SubscriptionManager.AssemblyInfo.cs
 C:\Users\Gundam\Desktop\Could be\SubscriptionManager\SubscriptionManager\obj\Debug\net8.0-windows\SubscriptionManager.csproj.CoreCompileInputs.cache
+C:\Users\Gundam\Desktop\Could be\SubscriptionManager\SubscriptionManager\obj\Debug\net8.0-windows\SubscriptionManager.sourcelink.json
 C:\Users\Gundam\Desktop\Could be\SubscriptionManager\SubscriptionManager\obj\Debug\net8.0-windows\Subscrip.5E76C527.Up2Date
 C:\Users\Gundam\Desktop\Could be\SubscriptionManager\SubscriptionManager\obj\Debug\net8.0-windows\SubscriptionManager.dll
 C:\Users\Gundam\Desktop\Could be\SubscriptionManager\SubscriptionManager\obj\Debug\net8.0-windows\refint\SubscriptionManager.dll

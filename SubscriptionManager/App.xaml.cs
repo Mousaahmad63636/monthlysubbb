@@ -31,11 +31,13 @@ namespace SubscriptionManager
             // Services
             services.AddScoped<ISubscriptionService, SubscriptionService>();
             services.AddScoped<IExpenseService, ExpenseService>();
+            services.AddScoped<ISettingsService, SettingsService>();
 
             // ViewModels
             services.AddTransient<MainViewModel>();
             services.AddTransient<SubscriptionViewModel>();
             services.AddTransient<ExpenseViewModel>();
+            services.AddTransient<SettingsViewModel>();
 
             // Main Window
             services.AddSingleton<MainWindow>();
@@ -43,20 +45,36 @@ namespace SubscriptionManager
 
         protected override async void OnStartup(StartupEventArgs e)
         {
-            await _host.StartAsync();
-
-            // Create database if it doesn't exist
-            using (var scope = _host.Services.CreateScope())
+            try
             {
-                var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-                await context.Database.EnsureCreatedAsync();
+                await _host.StartAsync();
+
+                // Create database if it doesn't exist - COMPLETE THIS FIRST
+                using (var scope = _host.Services.CreateScope())
+                {
+                    var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+                    await context.Database.EnsureCreatedAsync();
+                }
+
+                // Show main window AFTER database initialization
+                var mainWindow = _host.Services.GetRequiredService<MainWindow>();
+
+                // Initialize ViewModels AFTER showing window
+                if (mainWindow.DataContext is MainViewModel mainViewModel)
+                {
+                    await mainViewModel.InitializeAsync();
+                }
+
+                mainWindow.Show();
+
+                base.OnStartup(e);
             }
-
-            // Show main window
-            var mainWindow = _host.Services.GetRequiredService<MainWindow>();
-            mainWindow.Show();
-
-            base.OnStartup(e);
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Application startup failed: {ex.Message}", "Startup Error",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+                Shutdown();
+            }
         }
 
         protected override async void OnExit(ExitEventArgs e)

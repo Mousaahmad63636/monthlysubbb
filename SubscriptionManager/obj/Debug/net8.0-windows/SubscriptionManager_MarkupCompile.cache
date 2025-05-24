@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET8_0;NETCOREAPP
 C:\Users\Gundam\Desktop\Could be\SubscriptionManager\SubscriptionManager\App.xaml
-3-275618964
+4-1180807717
 
-20-2064225750
+261084713293
 2571978868941
-MainWindow.xaml;Views\ExpenseView.xaml;Views\SubscriptionView.xaml;
+MainWindow.xaml;Views\ExpenseView.xaml;Views\SettingsView.xaml;Views\SubscriptionView.xaml;
 
 False
 

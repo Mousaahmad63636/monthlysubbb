@@ -14,12 +14,10 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <!-- Header -->
         <TextBlock Text="Expense Management" 
                    FontSize="18" FontWeight="Bold" 
                    Margin="0,0,0,15"/>
 
-        <!-- Filter Controls -->
         <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,15">
             <Label Content="From:" VerticalAlignment="Center"/>
             <DatePicker SelectedDate="{Binding StartDate}" Margin="5,0,15,0"/>
@@ -37,7 +35,6 @@
                     Padding="10,5"/>
         </StackPanel>
 
-        <!-- Expenses DataGrid -->
         <DataGrid Grid.Row="2" 
                   ItemsSource="{Binding Expenses}"
                   SelectedItem="{Binding SelectedExpense}"
@@ -68,57 +65,58 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <!-- Summary -->
         <Border Grid.Row="3" Background="LightBlue" Padding="10" Margin="0,10,0,0">
             <TextBlock Text="{Binding TotalExpenses, StringFormat='Total Expenses: {0:C2}'}" 
                        FontWeight="Bold" FontSize="14"/>
         </Border>
 
-        <!-- New Expense Dialog -->
         <Border Background="#80000000" 
                 Visibility="{Binding IsNewExpenseDialogOpen, Converter={x:Static local:Converters.BoolToVisibilityConverter}}"
                 Grid.RowSpan="4">
             <Border Background="White" 
-                    Width="450" Height="400"
+                    Width="500" Height="550"
                     VerticalAlignment="Center" HorizontalAlignment="Center"
                     CornerRadius="10" 
                     BorderBrush="Gray" BorderThickness="1">
-                <StackPanel Margin="20">
-                    <TextBlock Text="Add New Expense" FontWeight="Bold" FontSize="16" 
-                               HorizontalAlignment="Center" Margin="0,0,0,20"/>
+                <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="20">
+                    <StackPanel>
+                        <TextBlock Text="Add New Expense" FontWeight="Bold" FontSize="16" 
+                                   HorizontalAlignment="Center" Margin="0,0,0,20"/>
 
-                    <Label Content="Date:"/>
-                    <DatePicker SelectedDate="{Binding NewExpense.Date}" 
-                                Margin="0,0,0,10"/>
+                        <Label Content="Date:"/>
+                        <DatePicker SelectedDate="{Binding NewExpense.Date}" 
+                                    Margin="0,0,0,15"/>
 
-                    <Label Content="Reason:"/>
-                    <TextBox Text="{Binding NewExpense.Reason, UpdateSourceTrigger=PropertyChanged}" 
-                             Margin="0,0,0,10"/>
+                        <Label Content="Reason:"/>
+                        <TextBox Text="{Binding NewExpense.Reason, UpdateSourceTrigger=PropertyChanged}" 
+                                 Margin="0,0,0,15"/>
 
-                    <Label Content="Category:"/>
-                    <ComboBox ItemsSource="{Binding Categories}"
-                              SelectedItem="{Binding NewExpense.Category}"
-                              Margin="0,0,0,10"/>
+                        <Label Content="Category:"/>
+                        <ComboBox ItemsSource="{Binding Categories}"
+                                  SelectedItem="{Binding NewExpense.Category}"
+                                  Margin="0,0,0,15"/>
 
-                    <Label Content="Amount ($):"/>
-                    <TextBox Text="{Binding NewExpense.Amount, UpdateSourceTrigger=PropertyChanged}" 
-                             Margin="0,0,0,10"/>
+                        <Label Content="Amount ($):"/>
+                        <TextBox Text="{Binding NewExpense.Amount, UpdateSourceTrigger=PropertyChanged, Converter={x:Static local:Converters.DecimalConverter}}" 
+                                 Margin="0,0,0,15"/>
 
-                    <Label Content="Notes:"/>
-                    <TextBox Text="{Binding NewExpense.Notes, UpdateSourceTrigger=PropertyChanged}" 
-                             Height="60" TextWrapping="Wrap" AcceptsReturn="True"
-                             Margin="0,0,0,20"/>
+                        <Label Content="Notes:"/>
+                        <TextBox Text="{Binding NewExpense.Notes, UpdateSourceTrigger=PropertyChanged}" 
+                                 Height="80" TextWrapping="Wrap" AcceptsReturn="True"
+                                 VerticalScrollBarVisibility="Auto"
+                                 Margin="0,0,0,25"/>
 
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                        <Button Content="Cancel" 
-                                Command="{Binding CloseNewExpenseDialogCommand}"
-                                Margin="0,0,10,0" Padding="15,8"/>
-                        <Button Content="Save Expense" 
-                                Command="{Binding AddExpenseCommand}"
-                                Background="Green" Foreground="White"
-                                Padding="15,8"/>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Button Content="Cancel" 
+                                    Command="{Binding CloseNewExpenseDialogCommand}"
+                                    Margin="0,0,15,0" Padding="20,10"/>
+                            <Button Content="Save Expense" 
+                                    Command="{Binding AddExpenseCommand}"
+                                    Background="Green" Foreground="White"
+                                    Padding="20,10"/>
+                        </StackPanel>
                     </StackPanel>
-                </StackPanel>
+                </ScrollViewer>
             </Border>
         </Border>
     </Grid>

@@ -14,6 +14,9 @@ namespace SubscriptionManager.Models
         private DateTime _lastBillDate;
         private decimal _pricePerUnit = 1;
         private bool _isActive = true;
+        private int? _subscriptionTypeId;
+        private decimal _monthlySubscriptionFee;
+        private decimal _totalMonthlyBill;
 
         public int Id
         {
@@ -69,8 +72,33 @@ namespace SubscriptionManager.Models
             set => SetProperty(ref _isActive, value);
         }
 
+        public int? SubscriptionTypeId
+        {
+            get => _subscriptionTypeId;
+            set => SetProperty(ref _subscriptionTypeId, value);
+        }
+
+        public decimal MonthlySubscriptionFee
+        {
+            get => _monthlySubscriptionFee;
+            set => SetProperty(ref _monthlySubscriptionFee, value);
+        }
+
+        public decimal TotalMonthlyBill
+        {
+            get => _totalMonthlyBill;
+            set => SetProperty(ref _totalMonthlyBill, value);
+        }
+
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public DateTime? UpdatedAt { get; set; }
+
+        // Navigation property
+        public virtual SubscriptionType? SubscriptionType { get; set; }
+
+        // Calculated properties
+        public decimal UsageAmount => BillAmount;
+        public string SubscriptionTypeName => SubscriptionType?.Name ?? "No Subscription";
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -85,6 +113,14 @@ namespace SubscriptionManager.Models
             field = value;
             OnPropertyChanged(propertyName);
             return true;
+        }
+
+        /// <summary>
+        /// Calculate total monthly bill including usage and subscription fee
+        /// </summary>
+        public void CalculateTotalMonthlyBill()
+        {
+            TotalMonthlyBill = BillAmount + MonthlySubscriptionFee;
         }
     }
 }

@@ -5,7 +5,6 @@ using SubscriptionManager.Commands;
 using SubscriptionManager.Models;
 using SubscriptionManager.Services;
 
-
 namespace SubscriptionManager.ViewModels
 {
     public class ExpenseViewModel : ViewModelBase
@@ -18,6 +17,7 @@ namespace SubscriptionManager.ViewModels
         private DateTime _endDate = DateTime.Now;
         private decimal _totalExpenses;
         private bool _isNewExpenseDialogOpen;
+        private bool _isInitialized;
         private readonly List<string> _categories = new()
         {
             "Motor Expenses",
@@ -35,7 +35,7 @@ namespace SubscriptionManager.ViewModels
             _newExpense = new Expense();
 
             InitializeCommands();
-            _ = LoadDataAsync();
+            // DO NOT call LoadDataAsync() here - will be called by InitializeAsync()
         }
 
         public ObservableCollection<Expense> Expenses
@@ -92,6 +92,12 @@ namespace SubscriptionManager.ViewModels
             set => SetProperty(ref _isNewExpenseDialogOpen, value);
         }
 
+        public bool IsInitialized
+        {
+            get => _isInitialized;
+            private set => SetProperty(ref _isInitialized, value);
+        }
+
         public List<string> Categories => _categories;
 
         // Commands
@@ -102,6 +108,24 @@ namespace SubscriptionManager.ViewModels
         public ICommand CloseNewExpenseDialogCommand { get; private set; } = null!;
         public ICommand RefreshCommand { get; private set; } = null!;
         public ICommand FilterCommand { get; private set; } = null!;
+
+        /// <summary>
+        /// Initialize the ViewModel asynchronously after database is ready
+        /// </summary>
+        public async Task InitializeAsync()
+        {
+            if (IsInitialized) return;
+
+            try
+            {
+                await LoadDataAsync();
+                IsInitialized = true;
+            }
+            catch (Exception ex)
+            {
+                await ShowErrorAsync($"Failed to initialize expense data: {ex.Message}");
+            }
+        }
 
         private void InitializeCommands()
         {
@@ -119,7 +143,13 @@ namespace SubscriptionManager.ViewModels
             try
             {
                 var expenses = await _expenseService.GetAllExpensesAsync();
-                Expenses = new ObservableCollection<Expense>(expenses);
+
+                // Update on UI thread
+                await System.Windows.Application.Current.Dispatcher.InvokeAsync(() =>
+                {
+                    Expenses = new ObservableCollection<Expense>(expenses);
+                });
+
                 await CalculateTotalAsync();
             }
             catch (Exception ex)
@@ -133,7 +163,13 @@ namespace SubscriptionManager.ViewModels
             try
             {
                 var expenses = await _expenseService.GetExpensesByDateRangeAsync(StartDate, EndDate);
-                Expenses = new ObservableCollection<Expense>(expenses);
+
+                // Update on UI thread
+                await System.Windows.Application.Current.Dispatcher.InvokeAsync(() =>
+                {
+                    Expenses = new ObservableCollection<Expense>(expenses);
+                });
+
                 await CalculateTotalAsync();
             }
             catch (Exception ex)
@@ -146,7 +182,13 @@ namespace SubscriptionManager.ViewModels
         {
             try
             {
-                TotalExpenses = await _expenseService.GetTotalExpensesAsync(StartDate, EndDate);
+                var total = await _expenseService.GetTotalExpensesAsync(StartDate, EndDate);
+
+                // Update on UI thread
+                await System.Windows.Application.Current.Dispatcher.InvokeAsync(() =>
+                {
+                    TotalExpenses = total;
+                });
             }
             catch (Exception ex)
             {

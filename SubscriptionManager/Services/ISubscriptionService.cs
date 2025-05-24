@@ -11,5 +11,7 @@ namespace SubscriptionManager.Services
         Task DeleteCustomerAsync(int id);
         Task<List<CounterHistory>> GetCustomerHistoryAsync(int customerId);
         Task SaveReadingAsync(int customerId, decimal newReading, decimal pricePerUnit);
+        Task<List<SubscriptionType>> GetActiveSubscriptionTypesAsync();
+        Task UpdateCustomerSubscriptionAsync(int customerId, int? subscriptionTypeId);
     }
 }

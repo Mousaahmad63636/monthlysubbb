@@ -18,6 +18,8 @@ namespace SubscriptionManager.ViewModels
         private decimal _pricePerUnit = 1.0m;
         private string _searchText = string.Empty;
         private bool _isNewCustomerDialogOpen;
+        private bool _isInitialized;
+        private ObservableCollection<SubscriptionType> _availableSubscriptionTypes;
 
         public SubscriptionViewModel(ISubscriptionService subscriptionService)
         {
@@ -25,9 +27,10 @@ namespace SubscriptionManager.ViewModels
             _customers = new ObservableCollection<CustomerSubscription>();
             _counterHistory = new ObservableCollection<CounterHistory>();
             _newCustomer = new CustomerSubscription();
+            _availableSubscriptionTypes = new ObservableCollection<SubscriptionType>();
 
             InitializeCommands();
-            _ = LoadDataAsync();
+            // DO NOT call LoadDataAsync() here - will be called by InitializeAsync()
         }
 
         public ObservableCollection<CustomerSubscription> Customers
@@ -90,6 +93,18 @@ namespace SubscriptionManager.ViewModels
             set => SetProperty(ref _isNewCustomerDialogOpen, value);
         }
 
+        public bool IsInitialized
+        {
+            get => _isInitialized;
+            private set => SetProperty(ref _isInitialized, value);
+        }
+
+        public ObservableCollection<SubscriptionType> AvailableSubscriptionTypes
+        {
+            get => _availableSubscriptionTypes;
+            set => SetProperty(ref _availableSubscriptionTypes, value);
+        }
+
         // Commands
         public ICommand AddCustomerCommand { get; private set; } = null!;
         public ICommand SaveCustomerCommand { get; private set; } = null!;
@@ -98,6 +113,25 @@ namespace SubscriptionManager.ViewModels
         public ICommand OpenNewCustomerDialogCommand { get; private set; } = null!;
         public ICommand CloseNewCustomerDialogCommand { get; private set; } = null!;
         public ICommand RefreshCommand { get; private set; } = null!;
+
+        /// <summary>
+        /// Initialize the ViewModel asynchronously after database is ready
+        /// </summary>
+        public async Task InitializeAsync()
+        {
+            if (IsInitialized) return;
+
+            try
+            {
+                await LoadDataAsync();
+                await LoadSubscriptionTypesAsync();
+                IsInitialized = true;
+            }
+            catch (Exception ex)
+            {
+                await ShowErrorAsync($"Failed to initialize subscription data: {ex.Message}");
+            }
+        }
 
         private void InitializeCommands()
         {
@@ -115,7 +149,12 @@ namespace SubscriptionManager.ViewModels
             try
             {
                 var customers = await _subscriptionService.GetAllCustomersAsync();
-                Customers = new ObservableCollection<CustomerSubscription>(customers);
+
+                // Update on UI thread
+                await System.Windows.Application.Current.Dispatcher.InvokeAsync(() =>
+                {
+                    Customers = new ObservableCollection<CustomerSubscription>(customers);
+                });
             }
             catch (Exception ex)
             {
@@ -130,7 +169,12 @@ namespace SubscriptionManager.ViewModels
             try
             {
                 var history = await _subscriptionService.GetCustomerHistoryAsync(SelectedCustomer.Id);
-                CounterHistory = new ObservableCollection<CounterHistory>(history);
+
+                // Update on UI thread
+                await System.Windows.Application.Current.Dispatcher.InvokeAsync(() =>
+                {
+                    CounterHistory = new ObservableCollection<CounterHistory>(history);
+                });
             }
             catch (Exception ex)
             {
@@ -144,21 +188,39 @@ namespace SubscriptionManager.ViewModels
             {
                 var allCustomers = await _subscriptionService.GetAllCustomersAsync();
 
-                if (string.IsNullOrWhiteSpace(SearchText))
-                {
-                    Customers = new ObservableCollection<CustomerSubscription>(allCustomers);
-                }
-                else
-                {
-                    var filtered = allCustomers.Where(c =>
+                var filtered = string.IsNullOrWhiteSpace(SearchText)
+                    ? allCustomers
+                    : allCustomers.Where(c =>
                         c.Name.Contains(SearchText, StringComparison.OrdinalIgnoreCase) ||
                         c.PhoneNumber.Contains(SearchText, StringComparison.OrdinalIgnoreCase));
+
+                // Update on UI thread
+                await System.Windows.Application.Current.Dispatcher.InvokeAsync(() =>
+                {
                     Customers = new ObservableCollection<CustomerSubscription>(filtered);
-                }
+                });
             }
             catch (Exception ex)
             {
                 await ShowErrorAsync($"Error filtering customers: {ex.Message}");
+            }
+        }
+
+        private async Task LoadSubscriptionTypesAsync()
+        {
+            try
+            {
+                var subscriptionTypes = await _subscriptionService.GetActiveSubscriptionTypesAsync();
+
+                // Update on UI thread
+                await System.Windows.Application.Current.Dispatcher.InvokeAsync(() =>
+                {
+                    AvailableSubscriptionTypes = new ObservableCollection<SubscriptionType>(subscriptionTypes);
+                });
+            }
+            catch (Exception ex)
+            {
+                await ShowErrorAsync($"Error loading subscription types: {ex.Message}");
             }
         }
 
@@ -189,6 +251,7 @@ namespace SubscriptionManager.ViewModels
 
                 CloseNewCustomerDialog();
                 await LoadDataAsync();
+                await LoadSubscriptionTypesAsync();
             }
             catch (Exception ex)
             {

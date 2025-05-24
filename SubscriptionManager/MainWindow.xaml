@@ -18,6 +18,10 @@
             <TabItem Header="Expenses">
                 <views:ExpenseView DataContext="{Binding ExpenseViewModel}"/>
             </TabItem>
+            <TabItem Header="Settings">
+                <views:SettingsView DataContext="{Binding SettingsViewModel}"/>
+            </TabItem>
         </TabControl>
     </Grid>
+
 </Window>
