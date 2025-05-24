@@ -93,10 +93,9 @@ namespace SubscriptionManager.Models
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public DateTime? UpdatedAt { get; set; }
 
-        // Navigation property
+
         public virtual SubscriptionType? SubscriptionType { get; set; }
 
-        // Calculated properties
         public decimal UsageAmount => BillAmount;
         public string SubscriptionTypeName => SubscriptionType?.Name ?? "No Subscription";
 
@@ -115,9 +114,6 @@ namespace SubscriptionManager.Models
             return true;
         }
 
-        /// <summary>
-        /// Calculate total monthly bill including usage and subscription fee
-        /// </summary>
         public void CalculateTotalMonthlyBill()
         {
             TotalMonthlyBill = BillAmount + MonthlySubscriptionFee;

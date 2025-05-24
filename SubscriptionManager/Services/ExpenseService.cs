@@ -17,7 +17,7 @@ namespace SubscriptionManager.Services
         {
             return await _context.Expenses
                 .OrderByDescending(e => e.Date)
-                .AsNoTracking() // Improve performance for read-only queries
+                .AsNoTracking() 
                 .ToListAsync()
                 .ConfigureAwait(false);
         }
@@ -70,20 +70,20 @@ namespace SubscriptionManager.Services
 
         public async Task<List<Expense>> GetExpensesByDateRangeAsync(DateTime startDate, DateTime endDate)
         {
-            // Ensure end date includes the entire day
+           
             var endDateInclusive = endDate.Date.AddDays(1).AddTicks(-1);
 
             return await _context.Expenses
                 .Where(e => e.Date >= startDate.Date && e.Date <= endDateInclusive)
                 .OrderByDescending(e => e.Date)
-                .AsNoTracking() // Improve performance for read-only queries
+                .AsNoTracking() 
                 .ToListAsync()
                 .ConfigureAwait(false);
         }
 
         public async Task<decimal> GetTotalExpensesAsync(DateTime startDate, DateTime endDate)
         {
-            // Ensure end date includes the entire day
+         
             var endDateInclusive = endDate.Date.AddDays(1).AddTicks(-1);
 
             return await _context.Expenses

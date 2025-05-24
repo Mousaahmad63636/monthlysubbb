@@ -30,7 +30,7 @@ namespace SubscriptionManager.ViewModels
         public SettingsViewModel(ISettingsService settingsService)
         {
             _settingsService = settingsService;
-            _settings = new Settings(); // Initialize with default settings
+            _settings = new Settings(); 
             _subscriptionTypes = new ObservableCollection<SubscriptionType>();
             _newSubscriptionType = new SubscriptionType();
 
@@ -99,9 +99,6 @@ namespace SubscriptionManager.ViewModels
 
         #endregion
 
-        /// <summary>
-        /// Initialize the ViewModel asynchronously after database is ready
-        /// </summary>
         public async Task InitializeAsync()
         {
             if (IsInitialized) return;
@@ -136,13 +133,13 @@ namespace SubscriptionManager.ViewModels
         {
             try
             {
-                // Load settings
+              
                 var settings = await _settingsService.GetSettingsAsync();
 
-                // Load subscription types
+             
                 var subscriptionTypes = await _settingsService.GetAllSubscriptionTypesAsync();
 
-                // Update on UI thread
+           
                 await System.Windows.Application.Current.Dispatcher.InvokeAsync(() =>
                 {
                     Settings = settings;
@@ -201,7 +198,7 @@ namespace SubscriptionManager.ViewModels
         {
             if (SelectedSubscriptionType == null) return;
 
-            // Create a copy for editing
+      
             NewSubscriptionType = new SubscriptionType
             {
                 Id = SelectedSubscriptionType.Id,

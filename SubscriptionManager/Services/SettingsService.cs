@@ -21,7 +21,7 @@ namespace SubscriptionManager.Services
 
             if (settings == null)
             {
-                // Create default settings if none exist
+               
                 settings = new Settings
                 {
                     DefaultPricePerUnit = 1.0m,
@@ -106,7 +106,7 @@ namespace SubscriptionManager.Services
             if (subscriptionType == null)
                 throw new ArgumentNullException(nameof(subscriptionType));
 
-            // Check for duplicate names (excluding current record)
+    
             var existing = await _context.SubscriptionTypes
                 .Where(st => st.Name.ToLower() == subscriptionType.Name.ToLower() && st.Id != subscriptionType.Id)
                 .FirstOrDefaultAsync()
@@ -129,7 +129,7 @@ namespace SubscriptionManager.Services
 
             if (subscriptionType != null)
             {
-                // Check if any customers are using this subscription type
+             
                 var customersUsingType = await _context.CustomerSubscriptions
                     .Where(cs => cs.SubscriptionTypeId == id && cs.IsActive)
                     .CountAsync()
@@ -137,13 +137,13 @@ namespace SubscriptionManager.Services
 
                 if (customersUsingType > 0)
                 {
-                    // Soft delete - just mark as inactive
+                  
                     subscriptionType.IsActive = false;
                     subscriptionType.UpdatedAt = DateTime.Now;
                 }
                 else
                 {
-                    // Hard delete if no customers are using it
+                 
                     _context.SubscriptionTypes.Remove(subscriptionType);
                 }
 

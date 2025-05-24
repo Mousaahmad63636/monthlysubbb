@@ -35,7 +35,7 @@ namespace SubscriptionManager.ViewModels
             _newExpense = new Expense();
 
             InitializeCommands();
-            // DO NOT call LoadDataAsync() here - will be called by InitializeAsync()
+
         }
 
         public ObservableCollection<Expense> Expenses
@@ -109,9 +109,7 @@ namespace SubscriptionManager.ViewModels
         public ICommand RefreshCommand { get; private set; } = null!;
         public ICommand FilterCommand { get; private set; } = null!;
 
-        /// <summary>
-        /// Initialize the ViewModel asynchronously after database is ready
-        /// </summary>
+
         public async Task InitializeAsync()
         {
             if (IsInitialized) return;
@@ -144,7 +142,7 @@ namespace SubscriptionManager.ViewModels
             {
                 var expenses = await _expenseService.GetAllExpensesAsync();
 
-                // Update on UI thread
+          
                 await System.Windows.Application.Current.Dispatcher.InvokeAsync(() =>
                 {
                     Expenses = new ObservableCollection<Expense>(expenses);
@@ -164,7 +162,7 @@ namespace SubscriptionManager.ViewModels
             {
                 var expenses = await _expenseService.GetExpensesByDateRangeAsync(StartDate, EndDate);
 
-                // Update on UI thread
+           
                 await System.Windows.Application.Current.Dispatcher.InvokeAsync(() =>
                 {
                     Expenses = new ObservableCollection<Expense>(expenses);
@@ -184,7 +182,7 @@ namespace SubscriptionManager.ViewModels
             {
                 var total = await _expenseService.GetTotalExpensesAsync(StartDate, EndDate);
 
-                // Update on UI thread
+             
                 await System.Windows.Application.Current.Dispatcher.InvokeAsync(() =>
                 {
                     TotalExpenses = total;

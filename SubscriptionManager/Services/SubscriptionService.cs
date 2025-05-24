@@ -19,7 +19,7 @@ namespace SubscriptionManager.Services
                 .Include(c => c.SubscriptionType)
                 .Where(c => c.IsActive)
                 .OrderBy(c => c.Name)
-                .AsNoTracking() // Improve performance for read-only queries
+                .AsNoTracking()
                 .ToListAsync()
                 .ConfigureAwait(false);
         }
@@ -44,7 +44,7 @@ namespace SubscriptionManager.Services
 
             customer.CreatedAt = DateTime.Now;
 
-            // If subscription type is assigned, set the monthly fee
+ 
             if (customer.SubscriptionTypeId.HasValue)
             {
                 var subscriptionType = await _context.SubscriptionTypes
@@ -70,7 +70,7 @@ namespace SubscriptionManager.Services
 
             customer.UpdatedAt = DateTime.Now;
 
-            // If subscription type changed, update the monthly fee
+       
             if (customer.SubscriptionTypeId.HasValue)
             {
                 var subscriptionType = await _context.SubscriptionTypes
@@ -113,7 +113,7 @@ namespace SubscriptionManager.Services
             return await _context.CounterHistories
                 .Where(h => h.CustomerSubscriptionId == customerId)
                 .OrderByDescending(h => h.RecordDate)
-                .AsNoTracking() // Improve performance for read-only queries
+                .AsNoTracking() 
                 .ToListAsync()
                 .ConfigureAwait(false);
         }
@@ -131,15 +131,13 @@ namespace SubscriptionManager.Services
                 if (customer == null)
                     throw new InvalidOperationException($"Customer with ID {customerId} not found.");
 
-                // Validate new reading
                 if (newReading <= customer.NewCounter)
                     throw new InvalidOperationException("New reading must be greater than current reading.");
 
-                // Calculate consumption and bill
                 var consumption = newReading - customer.NewCounter;
                 var billAmount = consumption * pricePerUnit;
 
-                // Save history
+ 
                 var history = new CounterHistory
                 {
                     CustomerSubscriptionId = customerId,
@@ -151,7 +149,6 @@ namespace SubscriptionManager.Services
                 };
                 _context.CounterHistories.Add(history);
 
-                // Update customer
                 customer.OldCounter = customer.NewCounter;
                 customer.NewCounter = newReading;
                 customer.BillAmount = billAmount;

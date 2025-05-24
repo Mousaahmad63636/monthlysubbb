@@ -66,7 +66,7 @@ namespace SubscriptionManager.ViewModels
 
             try
             {
-                // Initialize ViewModels sequentially to avoid concurrent DbContext usage
+
                 await SubscriptionViewModel.InitializeAsync();
                 await ExpenseViewModel.InitializeAsync();
                 await SettingsViewModel.InitializeAsync();

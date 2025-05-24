@@ -51,7 +51,7 @@ namespace SubscriptionManager.Models
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public DateTime? UpdatedAt { get; set; }
 
-        // Navigation property
+
         public virtual ICollection<CustomerSubscription> CustomerSubscriptions { get; set; } = new List<CustomerSubscription>();
 
         public event PropertyChangedEventHandler? PropertyChanged;

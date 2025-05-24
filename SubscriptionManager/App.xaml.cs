@@ -49,17 +49,17 @@ namespace SubscriptionManager
             {
                 await _host.StartAsync();
 
-                // Create database if it doesn't exist - COMPLETE THIS FIRST
+ 
                 using (var scope = _host.Services.CreateScope())
                 {
                     var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
                     await context.Database.EnsureCreatedAsync();
                 }
 
-                // Show main window AFTER database initialization
+         
                 var mainWindow = _host.Services.GetRequiredService<MainWindow>();
 
-                // Initialize ViewModels AFTER showing window
+
                 if (mainWindow.DataContext is MainViewModel mainViewModel)
                 {
                     await mainViewModel.InitializeAsync();

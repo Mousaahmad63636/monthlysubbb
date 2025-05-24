@@ -30,7 +30,7 @@ namespace SubscriptionManager.ViewModels
             _availableSubscriptionTypes = new ObservableCollection<SubscriptionType>();
 
             InitializeCommands();
-            // DO NOT call LoadDataAsync() here - will be called by InitializeAsync()
+     
         }
 
         public ObservableCollection<CustomerSubscription> Customers
@@ -114,9 +114,7 @@ namespace SubscriptionManager.ViewModels
         public ICommand CloseNewCustomerDialogCommand { get; private set; } = null!;
         public ICommand RefreshCommand { get; private set; } = null!;
 
-        /// <summary>
-        /// Initialize the ViewModel asynchronously after database is ready
-        /// </summary>
+    
         public async Task InitializeAsync()
         {
             if (IsInitialized) return;
@@ -150,7 +148,7 @@ namespace SubscriptionManager.ViewModels
             {
                 var customers = await _subscriptionService.GetAllCustomersAsync();
 
-                // Update on UI thread
+
                 await System.Windows.Application.Current.Dispatcher.InvokeAsync(() =>
                 {
                     Customers = new ObservableCollection<CustomerSubscription>(customers);
@@ -170,7 +168,7 @@ namespace SubscriptionManager.ViewModels
             {
                 var history = await _subscriptionService.GetCustomerHistoryAsync(SelectedCustomer.Id);
 
-                // Update on UI thread
+          
                 await System.Windows.Application.Current.Dispatcher.InvokeAsync(() =>
                 {
                     CounterHistory = new ObservableCollection<CounterHistory>(history);
@@ -194,7 +192,7 @@ namespace SubscriptionManager.ViewModels
                         c.Name.Contains(SearchText, StringComparison.OrdinalIgnoreCase) ||
                         c.PhoneNumber.Contains(SearchText, StringComparison.OrdinalIgnoreCase));
 
-                // Update on UI thread
+     
                 await System.Windows.Application.Current.Dispatcher.InvokeAsync(() =>
                 {
                     Customers = new ObservableCollection<CustomerSubscription>(filtered);
@@ -212,7 +210,7 @@ namespace SubscriptionManager.ViewModels
             {
                 var subscriptionTypes = await _subscriptionService.GetActiveSubscriptionTypesAsync();
 
-                // Update on UI thread
+           
                 await System.Windows.Application.Current.Dispatcher.InvokeAsync(() =>
                 {
                     AvailableSubscriptionTypes = new ObservableCollection<SubscriptionType>(subscriptionTypes);

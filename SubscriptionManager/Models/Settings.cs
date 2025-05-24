@@ -10,7 +10,7 @@ namespace SubscriptionManager.Models
         private string _companyName = "Subscription Manager";
         private string _adminEmail = string.Empty;
         private bool _autoCalculateMonthlyFees = true;
-        private int _billingDay = 1; // Day of month for billing
+        private int _billingDay = 1; 
 
         public int Id
         {
