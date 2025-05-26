@@ -12,5 +12,11 @@ namespace SubscriptionManager.Services
         Task<SubscriptionType> UpdateSubscriptionTypeAsync(SubscriptionType subscriptionType);
         Task DeleteSubscriptionTypeAsync(int id);
         Task<List<SubscriptionType>> GetActiveSubscriptionTypesAsync();
+
+        /// <summary>
+        /// Gets the count of active customers that will be affected by pricing changes.
+        /// </summary>
+        /// <returns>Number of active customers</returns>
+        Task<int> GetActiveCustomersCountAsync();
     }
 }

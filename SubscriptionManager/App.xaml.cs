@@ -32,6 +32,8 @@ namespace SubscriptionManager
             services.AddScoped<ISubscriptionService, SubscriptionService>();
             services.AddScoped<IExpenseService, ExpenseService>();
             services.AddScoped<ISettingsService, SettingsService>();
+            services.AddScoped<IPaymentService, PaymentService>();
+            services.AddScoped<IPrintService, PrintService>(); // Added Print Service
 
             // ViewModels
             services.AddTransient<MainViewModel>();
@@ -49,17 +51,17 @@ namespace SubscriptionManager
             {
                 await _host.StartAsync();
 
- 
+                // Ensure database is created
                 using (var scope = _host.Services.CreateScope())
                 {
                     var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
                     await context.Database.EnsureCreatedAsync();
                 }
 
-         
+                // Get and show main window
                 var mainWindow = _host.Services.GetRequiredService<MainWindow>();
 
-
+                // Initialize ViewModels
                 if (mainWindow.DataContext is MainViewModel mainViewModel)
                 {
                     await mainViewModel.InitializeAsync();

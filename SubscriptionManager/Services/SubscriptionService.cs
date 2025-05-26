@@ -44,7 +44,14 @@ namespace SubscriptionManager.Services
 
             customer.CreatedAt = DateTime.Now;
 
- 
+            // If no price per unit is set, use the default from settings
+            if (customer.PricePerUnit <= 0)
+            {
+                var settings = await GetDefaultSettingsAsync().ConfigureAwait(false);
+                customer.PricePerUnit = settings.DefaultPricePerUnit;
+            }
+
+            // Update monthly subscription fee if subscription type is set
             if (customer.SubscriptionTypeId.HasValue)
             {
                 var subscriptionType = await _context.SubscriptionTypes
@@ -70,7 +77,7 @@ namespace SubscriptionManager.Services
 
             customer.UpdatedAt = DateTime.Now;
 
-       
+            // Update monthly subscription fee based on subscription type
             if (customer.SubscriptionTypeId.HasValue)
             {
                 var subscriptionType = await _context.SubscriptionTypes
@@ -113,7 +120,7 @@ namespace SubscriptionManager.Services
             return await _context.CounterHistories
                 .Where(h => h.CustomerSubscriptionId == customerId)
                 .OrderByDescending(h => h.RecordDate)
-                .AsNoTracking() 
+                .AsNoTracking()
                 .ToListAsync()
                 .ConfigureAwait(false);
         }
@@ -137,7 +144,8 @@ namespace SubscriptionManager.Services
                 var consumption = newReading - customer.NewCounter;
                 var billAmount = consumption * pricePerUnit;
 
- 
+                // Create history record with the price per unit used for this specific reading
+                // This preserves the pricing at the time the reading was taken
                 var history = new CounterHistory
                 {
                     CustomerSubscriptionId = customerId,
@@ -145,15 +153,20 @@ namespace SubscriptionManager.Services
                     NewCounter = newReading,
                     BillAmount = billAmount,
                     RecordDate = DateTime.Now,
-                    PricePerUnit = pricePerUnit
+                    PricePerUnit = pricePerUnit // This preserves the historical pricing
                 };
                 _context.CounterHistories.Add(history);
 
+                // Update customer's current readings and billing info
                 customer.OldCounter = customer.NewCounter;
                 customer.NewCounter = newReading;
                 customer.BillAmount = billAmount;
                 customer.LastBillDate = DateTime.Now;
                 customer.UpdatedAt = DateTime.Now;
+
+                // Update the customer's price per unit to match what was used for this reading
+                // This ensures consistency between the customer record and the reading
+                customer.PricePerUnit = pricePerUnit;
 
                 await _context.SaveChangesAsync().ConfigureAwait(false);
                 await transaction.CommitAsync().ConfigureAwait(false);
@@ -206,6 +219,37 @@ namespace SubscriptionManager.Services
             customer.UpdatedAt = DateTime.Now;
 
             await _context.SaveChangesAsync().ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the default settings from the database.
+        /// This is used to apply default pricing to new customers.
+        /// </summary>
+        /// <returns>The current settings</returns>
+        private async Task<Settings> GetDefaultSettingsAsync()
+        {
+            var settings = await _context.Settings
+                .FirstOrDefaultAsync()
+                .ConfigureAwait(false);
+
+            if (settings == null)
+            {
+                // Create default settings if none exist
+                settings = new Settings
+                {
+                    DefaultPricePerUnit = 1.0m,
+                    CompanyName = "Subscription Manager",
+                    AutoCalculateMonthlyFees = true,
+                    BillingDay = 1,
+                    AdminEmail = "",
+                    CreatedAt = DateTime.Now
+                };
+
+                _context.Settings.Add(settings);
+                await _context.SaveChangesAsync().ConfigureAwait(false);
+            }
+
+            return settings;
         }
     }
 }

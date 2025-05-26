@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
+using SubscriptionManager.Models;
 
 namespace SubscriptionManager.Helpers
 {
@@ -14,6 +15,7 @@ namespace SubscriptionManager.Helpers
         public static readonly IValueConverter InverseBoolConverter = new InverseBoolValueConverter();
         public static readonly IValueConverter MonthNumberToNameConverter = new MonthNumberToNameValueConverter();
         public static readonly IValueConverter ProfitToColorConverter = new ProfitToColorValueConverter();
+        public static readonly IValueConverter PaymentStatusToColorConverter = new PaymentStatusToColorValueConverter();
     }
 
     public class BoolToVisibilityValueConverter : IValueConverter
@@ -150,6 +152,30 @@ namespace SubscriptionManager.Helpers
                     return new SolidColorBrush(Colors.LightCoral);
                 else
                     return new SolidColorBrush(Colors.LightGray);
+            }
+            return new SolidColorBrush(Colors.LightGray);
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class PaymentStatusToColorValueConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is PaymentStatus status)
+            {
+                return status switch
+                {
+                    PaymentStatus.Paid => new SolidColorBrush(Colors.LightGreen),
+                    PaymentStatus.PartiallyPaid => new SolidColorBrush(Colors.LightYellow),
+                    PaymentStatus.Pending => new SolidColorBrush(Colors.LightBlue),
+                    PaymentStatus.Overdue => new SolidColorBrush(Colors.LightCoral),
+                    _ => new SolidColorBrush(Colors.LightGray)
+                };
             }
             return new SolidColorBrush(Colors.LightGray);
         }

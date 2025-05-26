@@ -1,0 +1,300 @@
+﻿<UserControl x:Class="SubscriptionManager.Views.InvoiceTemplate"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:SubscriptionManager.Helpers"
+             Width="8.5in" Height="11in"
+             Background="White">
+
+    <Grid Margin="0.5in">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header Section -->
+        <Grid Grid.Row="0" Margin="0,0,0,30">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Company Information -->
+            <StackPanel Grid.Column="0">
+                <TextBlock Text="{Binding CompanyName}" 
+                           FontSize="24" FontWeight="Bold" 
+                           Foreground="DarkBlue"/>
+                <TextBlock Text="UTILITY SERVICES INVOICE" 
+                           FontSize="14" FontWeight="SemiBold" 
+                           Foreground="Gray" Margin="0,5,0,0"/>
+                <TextBlock Text="{Binding CompanyAddress}" 
+                           FontSize="10" Margin="0,5,0,0"/>
+                <TextBlock Text="{Binding CompanyContact}" 
+                           FontSize="10"/>
+            </StackPanel>
+
+            <!-- Invoice Details -->
+            <StackPanel Grid.Column="1" HorizontalAlignment="Right">
+                <Border BorderBrush="DarkBlue" BorderThickness="2" Padding="15">
+                    <StackPanel>
+                        <TextBlock Text="INVOICE" 
+                                   FontSize="20" FontWeight="Bold" 
+                                   HorizontalAlignment="Center"
+                                   Foreground="DarkBlue"/>
+                        <Separator Margin="0,5"/>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Invoice #: " FontWeight="SemiBold"/>
+                            <TextBlock Text="{Binding InvoiceNumber}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Date: " FontWeight="SemiBold"/>
+                            <TextBlock Text="{Binding InvoiceDate, StringFormat=d}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Due Date: " FontWeight="SemiBold"/>
+                            <TextBlock Text="{Binding DueDate, StringFormat=d}"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </Grid>
+
+        <!-- Customer Information -->
+        <Grid Grid.Row="1" Margin="0,0,0,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Bill To -->
+            <StackPanel Grid.Column="0">
+                <TextBlock Text="BILL TO:" FontWeight="Bold" 
+                           FontSize="12" Foreground="DarkBlue" 
+                           Margin="0,0,0,5"/>
+                <Border BorderBrush="LightGray" BorderThickness="1" Padding="10">
+                    <StackPanel>
+                        <TextBlock Text="{Binding CustomerName}" 
+                                   FontWeight="SemiBold" FontSize="14"/>
+                        <TextBlock Text="{Binding CustomerPhone}" 
+                                   Margin="0,2,0,0"/>
+                        <TextBlock Text="{Binding CustomerAddress}" 
+                                   Margin="0,2,0,0"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                            <TextBlock Text="Account #: " FontWeight="SemiBold"/>
+                            <TextBlock Text="{Binding AccountNumber}"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+
+            <!-- Service Period -->
+            <StackPanel Grid.Column="1" Margin="20,0,0,0">
+                <TextBlock Text="SERVICE PERIOD:" FontWeight="Bold" 
+                           FontSize="12" Foreground="DarkBlue" 
+                           Margin="0,0,0,5"/>
+                <Border BorderBrush="LightGray" BorderThickness="1" Padding="10">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="From: " FontWeight="SemiBold"/>
+                            <TextBlock Text="{Binding ServicePeriodStart, StringFormat=d}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,2,0,0">
+                            <TextBlock Text="To: " FontWeight="SemiBold"/>
+                            <TextBlock Text="{Binding ServicePeriodEnd, StringFormat=d}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                            <TextBlock Text="Subscription: " FontWeight="SemiBold"/>
+                            <TextBlock Text="{Binding SubscriptionType}"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </Grid>
+
+        <!-- Usage Summary -->
+        <GroupBox Grid.Row="2" Header="METER READINGS" 
+                  FontWeight="Bold" Foreground="DarkBlue" 
+                  Margin="0,0,0,20">
+            <Grid Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Previous Reading -->
+                <Border Grid.Column="0" BorderBrush="LightBlue" 
+                        BorderThickness="1" Padding="10" Margin="0,0,5,0">
+                    <StackPanel HorizontalAlignment="Center">
+                        <TextBlock Text="PREVIOUS" FontWeight="SemiBold" 
+                                   HorizontalAlignment="Center" FontSize="10"/>
+                        <TextBlock Text="{Binding PreviousReading, StringFormat=N2}" 
+                                   FontSize="16" FontWeight="Bold" 
+                                   HorizontalAlignment="Center"/>
+                        <TextBlock Text="{Binding PreviousReadingDate, StringFormat=d}" 
+                                   FontSize="9" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Current Reading -->
+                <Border Grid.Column="1" BorderBrush="LightGreen" 
+                        BorderThickness="1" Padding="10" Margin="2.5,0">
+                    <StackPanel HorizontalAlignment="Center">
+                        <TextBlock Text="CURRENT" FontWeight="SemiBold" 
+                                   HorizontalAlignment="Center" FontSize="10"/>
+                        <TextBlock Text="{Binding CurrentReading, StringFormat=N2}" 
+                                   FontSize="16" FontWeight="Bold" 
+                                   HorizontalAlignment="Center"/>
+                        <TextBlock Text="{Binding CurrentReadingDate, StringFormat=d}" 
+                                   FontSize="9" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Usage -->
+                <Border Grid.Column="2" BorderBrush="Orange" 
+                        BorderThickness="1" Padding="10" Margin="2.5,0">
+                    <StackPanel HorizontalAlignment="Center">
+                        <TextBlock Text="USAGE" FontWeight="SemiBold" 
+                                   HorizontalAlignment="Center" FontSize="10"/>
+                        <TextBlock Text="{Binding UsageAmount, StringFormat=N2}" 
+                                   FontSize="16" FontWeight="Bold" 
+                                   HorizontalAlignment="Center"/>
+                        <TextBlock Text="kWh" FontSize="9" 
+                                   HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Rate -->
+                <Border Grid.Column="3" BorderBrush="Purple" 
+                        BorderThickness="1" Padding="10" Margin="5,0,0,0">
+                    <StackPanel HorizontalAlignment="Center">
+                        <TextBlock Text="RATE" FontWeight="SemiBold" 
+                                   HorizontalAlignment="Center" FontSize="10"/>
+                        <TextBlock Text="{Binding PricePerUnit, StringFormat=C3}" 
+                                   FontSize="16" FontWeight="Bold" 
+                                   HorizontalAlignment="Center"/>
+                        <TextBlock Text="per kWh" FontSize="9" 
+                                   HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </GroupBox>
+
+        <!-- Reading History Table -->
+        <GroupBox Grid.Row="3" Header="DETAILED READING HISTORY" 
+                  FontWeight="Bold" Foreground="DarkBlue" 
+                  Margin="0,0,0,20"
+                  Visibility="{Binding ShowDetailedHistory, Converter={x:Static local:Converters.BoolToVisibilityConverter}}">
+            <DataGrid ItemsSource="{Binding ReadingHistory}"
+                      AutoGenerateColumns="False"
+                      IsReadOnly="True"
+                      HeadersVisibility="Column"
+                      GridLinesVisibility="Horizontal"
+                      MaxHeight="200"
+                      FontSize="10">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Date" Binding="{Binding RecordDate, StringFormat=d}" Width="80"/>
+                    <DataGridTextColumn Header="Previous" Binding="{Binding OldCounter, StringFormat=N2}" Width="70"/>
+                    <DataGridTextColumn Header="Current" Binding="{Binding NewCounter, StringFormat=N2}" Width="70"/>
+                    <DataGridTextColumn Header="Usage" Binding="{Binding UnitsUsed, StringFormat=N2}" Width="70"/>
+                    <DataGridTextColumn Header="Rate" Binding="{Binding PricePerUnit, StringFormat=C3}" Width="70"/>
+                    <DataGridTextColumn Header="Amount" Binding="{Binding BillAmount, StringFormat=C2}" Width="80"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </GroupBox>
+
+        <!-- Billing Details -->
+        <Border Grid.Row="5" BorderBrush="DarkBlue" BorderThickness="2" 
+                Padding="15" Margin="0,20,0,0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="200"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Payment Information -->
+                <StackPanel Grid.Column="0">
+                    <TextBlock Text="PAYMENT TERMS" FontWeight="Bold" 
+                               FontSize="12" Foreground="DarkBlue"/>
+                    <TextBlock Text="• Payment is due within 30 days of invoice date" 
+                               FontSize="10" Margin="0,5,0,0"/>
+                    <TextBlock Text="• Late payments may incur additional charges" 
+                               FontSize="10"/>
+                    <TextBlock Text="• Please include invoice number with payment" 
+                               FontSize="10"/>
+
+                    <TextBlock Text="CONTACT INFORMATION" FontWeight="Bold" 
+                               FontSize="12" Foreground="DarkBlue" 
+                               Margin="0,15,0,0"/>
+                    <TextBlock Text="{Binding CompanyPhone}" FontSize="10" Margin="0,5,0,0"/>
+                    <TextBlock Text="{Binding CompanyEmail}" FontSize="10"/>
+                </StackPanel>
+
+                <!-- Bill Summary -->
+                <StackPanel Grid.Column="1">
+                    <TextBlock Text="BILLING SUMMARY" FontWeight="Bold" 
+                               FontSize="12" Foreground="DarkBlue" 
+                               HorizontalAlignment="Center"/>
+                    <Separator Margin="0,5"/>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Usage Charges:" FontSize="11"/>
+                        <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding UsageCharges, StringFormat=C2}" 
+                                   FontSize="11" HorizontalAlignment="Right"/>
+
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Monthly Fee:" FontSize="11"/>
+                        <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding MonthlyFee, StringFormat=C2}" 
+                                   FontSize="11" HorizontalAlignment="Right"/>
+
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Subtotal:" FontSize="11"/>
+                        <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Subtotal, StringFormat=C2}" 
+                                   FontSize="11" HorizontalAlignment="Right"/>
+
+                        <TextBlock Grid.Row="3" Grid.Column="0" Text="Tax:" FontSize="11"/>
+                        <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding TaxAmount, StringFormat=C2}" 
+                                   FontSize="11" HorizontalAlignment="Right"/>
+
+                        <Separator Grid.Row="4" Grid.ColumnSpan="2" Margin="0,5"/>
+                    </Grid>
+
+                    <Grid Margin="0,5,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Text="TOTAL AMOUNT DUE:" 
+                                   FontWeight="Bold" FontSize="14" 
+                                   Foreground="DarkBlue"/>
+                        <TextBlock Grid.Column="1" Text="{Binding TotalAmount, StringFormat=C2}" 
+                                   FontWeight="Bold" FontSize="16" 
+                                   Foreground="DarkBlue" HorizontalAlignment="Right"/>
+                    </Grid>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Footer -->
+        <TextBlock Grid.Row="6" Text="Thank you for your business!" 
+                   HorizontalAlignment="Center" FontStyle="Italic" 
+                   FontSize="12" Margin="0,20,0,0" 
+                   Foreground="Gray"/>
+    </Grid>
+</UserControl>

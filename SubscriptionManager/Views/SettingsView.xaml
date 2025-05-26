@@ -29,7 +29,14 @@
                             <StackPanel>
                                 <Label Content="Default Price Per Unit ($):"/>
                                 <TextBox Text="{Binding Settings.DefaultPricePerUnit, UpdateSourceTrigger=PropertyChanged, Converter={x:Static local:Converters.DecimalConverter}}" 
-                                         Margin="0,0,0,15"/>
+                                         Margin="0,0,0,10"/>
+
+                                <!-- Information about price change impact -->
+                                <TextBlock Text="Note: Changing this price will automatically update all customer pricing for future readings. Historical readings will retain their original pricing." 
+                                           FontStyle="Italic" 
+                                           Foreground="DarkBlue" 
+                                           TextWrapping="Wrap"
+                                           Margin="0,0,0,15"/>
 
                                 <Label Content="Billing Day of Month (1-28):"/>
                                 <TextBox Text="{Binding Settings.BillingDay, UpdateSourceTrigger=PropertyChanged}" 

@@ -168,21 +168,163 @@
             </TabItem>
 
             <TabItem Header="Reading History">
-                <DataGrid ItemsSource="{Binding CounterHistory}"
-                          AutoGenerateColumns="False"
-                          IsReadOnly="True">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Date" Binding="{Binding RecordDate, StringFormat=g}" Width="120"/>
-                        <DataGridTextColumn Header="Previous" Binding="{Binding OldCounter, StringFormat=N2}" Width="80"/>
-                        <DataGridTextColumn Header="New" Binding="{Binding NewCounter, StringFormat=N2}" Width="80"/>
-                        <DataGridTextColumn Header="Usage" Binding="{Binding UnitsUsed, StringFormat=N2}" Width="80"/>
-                        <DataGridTextColumn Header="Rate" Binding="{Binding PricePerUnit, StringFormat=C2}" Width="80"/>
-                        <DataGridTextColumn Header="Amount" Binding="{Binding BillAmount, StringFormat=C2}" Width="80"/>
-                    </DataGrid.Columns>
-                </DataGrid>
+                <Grid Margin="10" IsEnabled="{Binding SelectedCustomer, Converter={x:Static local:Converters.IsNotNullConverter}}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Action Buttons -->
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,10">
+                        <Button Content="Print Invoice" 
+                                Command="{Binding PrintInvoiceCommand}"
+                                Background="DarkBlue" Foreground="White"
+                                Padding="15,8" Margin="0,0,10,0"/>
+                        <Button Content="Print Selected Reading" 
+                                Command="{Binding PrintSelectedReadingCommand}"
+                                Background="Navy" Foreground="White"
+                                Padding="15,8" Margin="0,0,10,0"
+                                IsEnabled="{Binding SelectedCounterHistory, Converter={x:Static local:Converters.IsNotNullConverter}}"/>
+                        <Button Content="Export to PDF" 
+                                Command="{Binding ExportInvoiceToPdfCommand}"
+                                Background="DarkGreen" Foreground="White"
+                                Padding="15,8" Margin="0,0,10,0"/>
+                        <Button Content="Refresh History" 
+                                Command="{Binding RefreshHistoryCommand}"
+                                Padding="15,8"/>
+                    </StackPanel>
+
+                    <!-- Reading History DataGrid -->
+                    <DataGrid Grid.Row="1"
+                              ItemsSource="{Binding CounterHistory}"
+                              SelectedItem="{Binding SelectedCounterHistory}"
+                              AutoGenerateColumns="False"
+                              IsReadOnly="True"
+                              AlternatingRowBackground="LightGray">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Date" Binding="{Binding RecordDate, StringFormat=g}" Width="140"/>
+                            <DataGridTextColumn Header="Previous" Binding="{Binding OldCounter, StringFormat=N2}" Width="80"/>
+                            <DataGridTextColumn Header="New" Binding="{Binding NewCounter, StringFormat=N2}" Width="80"/>
+                            <DataGridTextColumn Header="Usage" Binding="{Binding UnitsUsed, StringFormat=N2}" Width="80"/>
+                            <DataGridTextColumn Header="Rate" Binding="{Binding PricePerUnit, StringFormat=C3}" Width="80"/>
+                            <DataGridTextColumn Header="Amount" Binding="{Binding BillAmount, StringFormat=C2}" Width="100"/>
+                            <DataGridTemplateColumn Header="Actions" Width="120">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Button Content="Print" 
+                                                    Command="{Binding DataContext.PrintSingleReadingCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                                    CommandParameter="{Binding}"
+                                                    Margin="2" Padding="8,3" FontSize="10"
+                                                    Background="Blue" Foreground="White"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Payments">
+                <Grid Margin="10" IsEnabled="{Binding SelectedCustomer, Converter={x:Static local:Converters.IsNotNullConverter}}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Current Bill Section -->
+                    <GroupBox Grid.Row="0" Header="Current Bill" Margin="0,0,0,15" Padding="15">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <Label Grid.Row="0" Grid.Column="0" Content="Usage Bill:"/>
+                            <TextBox Grid.Row="0" Grid.Column="1" 
+                                     Text="{Binding SelectedCustomer.BillAmount, StringFormat=C2}" 
+                                     IsReadOnly="True" Background="LightGray"/>
+
+                            <Label Grid.Row="1" Grid.Column="0" Content="Monthly Fee:"/>
+                            <TextBox Grid.Row="1" Grid.Column="1" 
+                                     Text="{Binding SelectedCustomer.MonthlySubscriptionFee, StringFormat=C2}" 
+                                     IsReadOnly="True" Background="LightGray"/>
+
+                            <Label Grid.Row="2" Grid.Column="0" Content="Total Bill:" FontWeight="Bold"/>
+                            <TextBox Grid.Row="2" Grid.Column="1" 
+                                     Text="{Binding SelectedCustomer.TotalMonthlyBill, StringFormat=C2}" 
+                                     IsReadOnly="True" Background="LightYellow" FontWeight="Bold"/>
+
+                            <Label Grid.Row="3" Grid.Column="0" Content="Amount to Pay ($):"/>
+                            <TextBox Grid.Row="3" Grid.Column="1" 
+                                     Text="{Binding PaymentAmount, UpdateSourceTrigger=PropertyChanged, Converter={x:Static local:Converters.DecimalConverter}}"/>
+
+                            <Label Grid.Row="4" Grid.Column="0" Content="Payment Method:"/>
+                            <ComboBox Grid.Row="4" Grid.Column="1" 
+                                      ItemsSource="{Binding PaymentMethods}"
+                                      SelectedItem="{Binding SelectedPaymentMethod}"/>
+                        </Grid>
+                    </GroupBox>
+
+                    <!-- Payment Actions -->
+                    <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,15">
+                        <Button Content="Settle Full Bill" 
+                                Command="{Binding SettleFullBillCommand}"
+                                Background="Green" Foreground="White"
+                                Padding="15,8" Margin="0,0,10,0"/>
+                        <Button Content="Record Payment" 
+                                Command="{Binding RecordPaymentCommand}"
+                                Padding="15,8" Margin="0,0,10,0"/>
+                        <Button Content="Refresh Payments" 
+                                Command="{Binding RefreshPaymentsCommand}"
+                                Padding="15,8"/>
+                    </StackPanel>
+
+                    <!-- Payment History -->
+                    <DataGrid Grid.Row="2" 
+                              ItemsSource="{Binding PaymentHistory}"
+                              SelectedItem="{Binding SelectedPayment}"
+                              AutoGenerateColumns="False"
+                              IsReadOnly="True"
+                              AlternatingRowBackground="LightGray">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Date" Binding="{Binding PaymentDate, StringFormat=d}" Width="80"/>
+                            <DataGridTextColumn Header="Receipt #" Binding="{Binding ReceiptNumber}" Width="100"/>
+                            <DataGridTextColumn Header="Usage Bill" Binding="{Binding UsageBillAmount, StringFormat=C2}" Width="80"/>
+                            <DataGridTextColumn Header="Monthly Fee" Binding="{Binding MonthlySubscriptionAmount, StringFormat=C2}" Width="80"/>
+                            <DataGridTextColumn Header="Total Bill" Binding="{Binding TotalBillAmount, StringFormat=C2}" Width="80"/>
+                            <DataGridTextColumn Header="Amount Paid" Binding="{Binding AmountPaid, StringFormat=C2}" Width="80"/>
+                            <DataGridTextColumn Header="Balance" Binding="{Binding RemainingBalance, StringFormat=C2}" Width="80"/>
+                            <DataGridTextColumn Header="Method" Binding="{Binding PaymentMethod}" Width="80"/>
+                            <DataGridTextColumn Header="Status" Width="80">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Background" Value="{Binding Status, Converter={x:Static local:Converters.PaymentStatusToColorConverter}}"/>
+                                        <Setter Property="Padding" Value="5,2"/>
+                                        <Setter Property="TextAlignment" Value="Center"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                                <DataGridTextColumn.Binding>
+                                    <Binding Path="Status"/>
+                                </DataGridTextColumn.Binding>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="Notes" Binding="{Binding Notes}" Width="*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
             </TabItem>
         </TabControl>
 
+        <!-- New Customer Dialog -->
         <Border Background="#80000000" 
                 Visibility="{Binding IsNewCustomerDialogOpen, Converter={x:Static local:Converters.BoolToVisibilityConverter}}"
                 Grid.ColumnSpan="2">

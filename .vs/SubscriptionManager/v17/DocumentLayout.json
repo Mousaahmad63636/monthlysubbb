@@ -3,16 +3,8 @@
   "WorkspaceRootPath": "C:\\Users\\Gundam\\Desktop\\Could be\\SubscriptionManager\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{DFA37F13-BA4B-41C4-9FC1-C1B9634A09F9}|SubscriptionManager\\SubscriptionManager.csproj|c:\\users\\gundam\\desktop\\could be\\subscriptionmanager\\subscriptionmanager\\viewmodels\\expenseviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{DFA37F13-BA4B-41C4-9FC1-C1B9634A09F9}|SubscriptionManager\\SubscriptionManager.csproj|solutionrelative:subscriptionmanager\\viewmodels\\expenseviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DFA37F13-BA4B-41C4-9FC1-C1B9634A09F9}|SubscriptionManager\\SubscriptionManager.csproj|c:\\users\\gundam\\desktop\\could be\\subscriptionmanager\\subscriptionmanager\\views\\expenseview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{DFA37F13-BA4B-41C4-9FC1-C1B9634A09F9}|SubscriptionManager\\SubscriptionManager.csproj|solutionrelative:subscriptionmanager\\views\\expenseview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DFA37F13-BA4B-41C4-9FC1-C1B9634A09F9}|SubscriptionManager\\SubscriptionManager.csproj|c:\\users\\gundam\\desktop\\could be\\subscriptionmanager\\subscriptionmanager\\helpers\\converters.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{DFA37F13-BA4B-41C4-9FC1-C1B9634A09F9}|SubscriptionManager\\SubscriptionManager.csproj|solutionrelative:subscriptionmanager\\helpers\\converters.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{DFA37F13-BA4B-41C4-9FC1-C1B9634A09F9}|SubscriptionManager\\SubscriptionManager.csproj|c:\\users\\gundam\\desktop\\could be\\subscriptionmanager\\subscriptionmanager\\services\\printservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DFA37F13-BA4B-41C4-9FC1-C1B9634A09F9}|SubscriptionManager\\SubscriptionManager.csproj|solutionrelative:subscriptionmanager\\services\\printservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -27,38 +19,15 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "ExpenseViewModel.cs",
-              "DocumentMoniker": "C:\\Users\\Gundam\\Desktop\\Could be\\SubscriptionManager\\SubscriptionManager\\ViewModels\\ExpenseViewModel.cs",
-              "RelativeDocumentMoniker": "SubscriptionManager\\ViewModels\\ExpenseViewModel.cs",
-              "ToolTip": "C:\\Users\\Gundam\\Desktop\\Could be\\SubscriptionManager\\SubscriptionManager\\ViewModels\\ExpenseViewModel.cs",
-              "RelativeToolTip": "SubscriptionManager\\ViewModels\\ExpenseViewModel.cs",
-              "ViewState": "AgIAAL4AAAAAAAAAAAAkwM4AAABTAAAAAAAAAA==",
+              "Title": "PrintService.cs",
+              "DocumentMoniker": "C:\\Users\\Gundam\\Desktop\\Could be\\SubscriptionManager\\SubscriptionManager\\Services\\PrintService.cs",
+              "RelativeDocumentMoniker": "SubscriptionManager\\Services\\PrintService.cs",
+              "ToolTip": "C:\\Users\\Gundam\\Desktop\\Could be\\SubscriptionManager\\SubscriptionManager\\Services\\PrintService.cs",
+              "RelativeToolTip": "SubscriptionManager\\Services\\PrintService.cs",
+              "ViewState": "AgIAAG4BAAAAAAAAAAAuwJIBAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-24T18:06:14.058Z",
+              "WhenOpened": "2025-05-26T11:13:50.105Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "ExpenseView.xaml",
-              "DocumentMoniker": "C:\\Users\\Gundam\\Desktop\\Could be\\SubscriptionManager\\SubscriptionManager\\Views\\ExpenseView.xaml",
-              "RelativeDocumentMoniker": "SubscriptionManager\\Views\\ExpenseView.xaml",
-              "ToolTip": "C:\\Users\\Gundam\\Desktop\\Could be\\SubscriptionManager\\SubscriptionManager\\Views\\ExpenseView.xaml",
-              "RelativeToolTip": "SubscriptionManager\\Views\\ExpenseView.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-05-24T18:01:49.6Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Converters.cs",
-              "DocumentMoniker": "C:\\Users\\Gundam\\Desktop\\Could be\\SubscriptionManager\\SubscriptionManager\\Helpers\\Converters.cs",
-              "RelativeDocumentMoniker": "SubscriptionManager\\Helpers\\Converters.cs",
-              "ToolTip": "C:\\Users\\Gundam\\Desktop\\Could be\\SubscriptionManager\\SubscriptionManager\\Helpers\\Converters.cs",
-              "RelativeToolTip": "SubscriptionManager\\Helpers\\Converters.cs",
-              "ViewState": "AgIAAHgAAAAAAAAAAAAkwIgAAAAVAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-24T17:59:43.049Z"
             }
           ]
         }

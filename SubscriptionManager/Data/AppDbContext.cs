@@ -14,6 +14,7 @@ namespace SubscriptionManager.Data
         public DbSet<CounterHistory> CounterHistories { get; set; }
         public DbSet<Settings> Settings { get; set; }
         public DbSet<SubscriptionType> SubscriptionTypes { get; set; }
+        public DbSet<Payment> Payments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -49,11 +50,9 @@ namespace SubscriptionManager.Data
                 entity.Property(e => e.Category).HasMaxLength(100);
                 entity.Property(e => e.Notes).HasMaxLength(500);
 
-
                 entity.HasIndex(e => e.Date);
                 entity.HasIndex(e => e.Category);
             });
-
 
             modelBuilder.Entity<CounterHistory>(entity =>
             {
@@ -65,14 +64,12 @@ namespace SubscriptionManager.Data
 
                 entity.HasOne(e => e.CustomerSubscription)
                       .WithMany()
-                      .HasForeignKey(e => e.CustomerSubscriptionId)
+                      .HasForeignKey(e => e.CustomerSubscriptionId) // Fixed: was CustomerSubscrationId
                       .OnDelete(DeleteBehavior.Cascade);
 
-
-                entity.HasIndex(e => e.CustomerSubscriptionId);
+                entity.HasIndex(e => e.CustomerSubscriptionId); // Fixed: was CustomerSubscrationId
                 entity.HasIndex(e => e.RecordDate);
             });
-
 
             modelBuilder.Entity<Settings>(entity =>
             {
@@ -83,7 +80,6 @@ namespace SubscriptionManager.Data
                 entity.Property(e => e.BillingDay).HasDefaultValue(1);
             });
 
-  
             modelBuilder.Entity<SubscriptionType>(entity =>
             {
                 entity.HasKey(e => e.Id);
@@ -96,6 +92,32 @@ namespace SubscriptionManager.Data
                 entity.HasIndex(e => e.IsActive);
                 entity.HasIndex(e => e.Category);
             });
+
+            // Payment entity configuration
+            modelBuilder.Entity<Payment>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.UsageBillAmount).HasPrecision(18, 2);
+                entity.Property(e => e.MonthlySubscriptionAmount).HasPrecision(18, 2);
+                entity.Property(e => e.TotalBillAmount).HasPrecision(18, 2);
+                entity.Property(e => e.AmountPaid).HasPrecision(18, 2);
+                entity.Property(e => e.RemainingBalance).HasPrecision(18, 2);
+                entity.Property(e => e.PaymentMethod).HasMaxLength(50);
+                entity.Property(e => e.Notes).HasMaxLength(500);
+                entity.Property(e => e.ReceiptNumber).HasMaxLength(100);
+                entity.Property(e => e.Status).HasConversion<string>();
+
+                entity.HasOne(e => e.CustomerSubscription)
+                      .WithMany()
+                      .HasForeignKey(e => e.CustomerSubscriptionId)
+                      .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasIndex(e => e.CustomerSubscriptionId);
+                entity.HasIndex(e => e.PaymentDate);
+                entity.HasIndex(e => e.Status);
+                entity.HasIndex(e => e.IsFullyPaid);
+                entity.HasIndex(e => e.ReceiptNumber);
+            });
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -105,7 +127,6 @@ namespace SubscriptionManager.Data
                 optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=SubscriptionManager;Trusted_Connection=True;MultipleActiveResultSets=true");
             }
 
-  
 #if DEBUG
             optionsBuilder.EnableSensitiveDataLogging();
             optionsBuilder.EnableDetailedErrors();

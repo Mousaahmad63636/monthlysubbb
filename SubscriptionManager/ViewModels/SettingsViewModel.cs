@@ -11,6 +11,7 @@ namespace SubscriptionManager.ViewModels
     {
         private readonly ISettingsService _settingsService;
         private Settings _settings;
+        private Settings _originalSettings; // Keep track of original settings for comparison
         private ObservableCollection<SubscriptionType> _subscriptionTypes;
         private SubscriptionType? _selectedSubscriptionType;
         private SubscriptionType _newSubscriptionType;
@@ -30,7 +31,8 @@ namespace SubscriptionManager.ViewModels
         public SettingsViewModel(ISettingsService settingsService)
         {
             _settingsService = settingsService;
-            _settings = new Settings(); 
+            _settings = new Settings();
+            _originalSettings = new Settings();
             _subscriptionTypes = new ObservableCollection<SubscriptionType>();
             _newSubscriptionType = new SubscriptionType();
 
@@ -133,16 +135,26 @@ namespace SubscriptionManager.ViewModels
         {
             try
             {
-              
+                // Load settings and subscription types
                 var settings = await _settingsService.GetSettingsAsync();
-
-             
                 var subscriptionTypes = await _settingsService.GetAllSubscriptionTypesAsync();
 
-           
+                // Update UI on the main thread
                 await System.Windows.Application.Current.Dispatcher.InvokeAsync(() =>
                 {
                     Settings = settings;
+                    // Keep a copy of the original settings for comparison
+                    _originalSettings = new Settings
+                    {
+                        Id = settings.Id,
+                        DefaultPricePerUnit = settings.DefaultPricePerUnit,
+                        CompanyName = settings.CompanyName,
+                        AdminEmail = settings.AdminEmail,
+                        AutoCalculateMonthlyFees = settings.AutoCalculateMonthlyFees,
+                        BillingDay = settings.BillingDay,
+                        CreatedAt = settings.CreatedAt,
+                        UpdatedAt = settings.UpdatedAt
+                    };
                     SubscriptionTypes = new ObservableCollection<SubscriptionType>(subscriptionTypes);
                 });
             }
@@ -156,6 +168,7 @@ namespace SubscriptionManager.ViewModels
         {
             try
             {
+                // Basic validation
                 if (Settings.DefaultPricePerUnit <= 0)
                 {
                     await ShowErrorAsync("Default price per unit must be greater than zero.");
@@ -174,12 +187,56 @@ namespace SubscriptionManager.ViewModels
                     return;
                 }
 
+                // Check if the price per unit has changed
+                bool priceChanged = _originalSettings.DefaultPricePerUnit != Settings.DefaultPricePerUnit;
+
+                if (priceChanged)
+                {
+                    // Get the count of customers that will be affected
+                    var customerCount = await _settingsService.GetActiveCustomersCountAsync();
+
+                    if (customerCount > 0)
+                    {
+                        var result = MessageBox.Show(
+                            $"Changing the default price per unit from ${_originalSettings.DefaultPricePerUnit:F2} to ${Settings.DefaultPricePerUnit:F2} " +
+                            $"will automatically update the pricing for all {customerCount} active customers.\n\n" +
+                            "This change will apply to future meter readings only. Historical readings will retain their original pricing.\n\n" +
+                            "Do you want to continue?",
+                            "Confirm Price Change",
+                            MessageBoxButton.YesNo,
+                            MessageBoxImage.Question);
+
+                        if (result != MessageBoxResult.Yes)
+                        {
+                            // User cancelled, reload original settings
+                            await LoadDataAsync();
+                            return;
+                        }
+                    }
+                }
+
+                // Save the settings (this will also update customer pricing if needed)
                 await _settingsService.UpdateSettingsAsync(Settings);
-                await ShowSuccessAsync("Settings saved successfully!");
+
+                // Show appropriate success message
+                if (priceChanged)
+                {
+                    var customerCount = await _settingsService.GetActiveCustomersCountAsync();
+                    await ShowSuccessAsync($"Settings saved successfully! Price per unit updated for {customerCount} customers.");
+                }
+                else
+                {
+                    await ShowSuccessAsync("Settings saved successfully!");
+                }
+
+                // Reload data to ensure we have the latest information
+                await LoadDataAsync();
             }
             catch (Exception ex)
             {
                 await ShowErrorAsync($"Error saving settings: {ex.Message}");
+                // Reload original settings on error
+                await LoadDataAsync();
             }
         }
 
@@ -198,7 +255,7 @@ namespace SubscriptionManager.ViewModels
         {
             if (SelectedSubscriptionType == null) return;
 
-      
+            // Create a copy for editing
             NewSubscriptionType = new SubscriptionType
             {
                 Id = SelectedSubscriptionType.Id,
